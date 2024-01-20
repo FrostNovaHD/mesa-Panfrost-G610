@@ -76,6 +76,14 @@ pan_ioctl_get_param(int fd, unsigned long request, void *arg)
    case DRM_PANFROST_PARAM_AFBC_FEATURES:
       gp->value = 0;
       return 0;
+   case DRM_PANFROST_PARAM_MEM_FEATURES:
+      /* lazy default, but works for the purposes of drm_shim */
+      gp->value = 0x0;
+      return 0;
+   case DRM_PANFROST_PARAM_MMU_FEATURES:
+      /* default for most hardware so far */
+      gp->value = 0x00280030;
+      return 0;
    default:
       fprintf(stderr, "Unknown DRM_IOCTL_PANFROST_GET_PARAM %d\n", gp->param);
       return -1;
