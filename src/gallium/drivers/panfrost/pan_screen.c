@@ -363,6 +363,9 @@ panfrost_get_param(struct pipe_screen *screen, enum pipe_cap param)
         case PIPE_CAP_NATIVE_FENCE_FD:
                 return 0;
 
+        case PIPE_CAP_DEVICE_RESET_STATUS_QUERY:
+                return 1;
+
         default:
                 return u_pipe_screen_get_param_defaults(screen, param);
         }
