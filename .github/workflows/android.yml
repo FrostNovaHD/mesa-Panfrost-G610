@@ -47,8 +47,7 @@ jobs:
             --prefix=/tmp/pan \
             --cross-file "build-crossfile" \
             -Dplatforms=android \
-            -Dplatform-sdk-version=26 \
-            -Dandroid-stub=true \
+            -Dplatform-sdk-version=34 \
             -Dllvm=disabled \
             -Dxlib-lease=disabled \
             -Degl=disabled \
