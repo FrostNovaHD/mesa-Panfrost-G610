@@ -8,7 +8,7 @@ jobs:
   build:
     strategy:
       matrix:
-        arch: [ "arm32", "aarch64" ]
+        arch: [ "aarch64" ]
       fail-fast: false
 
     name: "Build for ${{matrix.arch}}"
@@ -31,7 +31,6 @@ jobs:
           meson setup "build-android" \
             --prefix=/tmp/drm-static \
             --cross-file "../build-crossfile-drm" \
-            -Ddefault_library=static \
             -Dintel=disabled \
             -Dradeon=disabled \
             -Damdgpu=disabled \
@@ -45,18 +44,17 @@ jobs:
           envsubst <android-${{matrix.arch}} >build-crossfile
           meson setup "build-android" \
             --prefix=/tmp/pan \
+            -Dtools=panfrost \
             --cross-file "build-crossfile" \
             -Dplatforms=android \
             -Dplatform-sdk-version=34 \
             -Dllvm=disabled \
-            -Dxlib-lease=disabled \
-            -Degl=disabled \
-            -Dgbm=disabled \
-            -Dglx=disabled \
+            -Dandroid-stub=true \
+            -Dopengl=true \
             -Dosmesa=true \
             -Dvulkan-drivers= \
-            -Dgallium-drivers=panfrost \
-            -Dshared-glapi=false
+            -Dgallium-drivers=swrast,panfrost \
+            -Dshared-glapi=true
           ninja -C "build-android" install
       - name: Upload libraries
         uses: actions/upload-artifact@v2
