@@ -56,7 +56,6 @@ jobs:
             -Dgallium-drivers=swrast,panfrost \
             -Dshared-glapi=true \
             -Dc_args="-lc++_shared -Wno-error=incompatible-function-pointer-types -fno-emulated-tls -fno-use-cxa-atexit"
-            -Dbuildtype=release
           ninja -C "build-android" install
       - name: Upload libraries
         uses: actions/upload-artifact@v2
