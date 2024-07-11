@@ -54,8 +54,8 @@ jobs:
             -Dosmesa=true \
             -Dvulkan-drivers= \
             -Dgallium-drivers=swrast,panfrost \
-            -Dshared-glapi=true \
-            -Dc_args="-lc++_shared -Wno-error=incompatible-function-pointer-types -fno-emulated-tls -fno-use-cxa-atexit"
+            -Dshared-glapi=false\
+            -Dc_args="-lc++_shared -fno-emulated-tls -fno-use-cxa-atexit"
           ninja -C "build-android" install
       - name: Upload libraries
         uses: actions/upload-artifact@v2
