@@ -42,9 +42,7 @@ jobs:
           ninja -C "build-android" install
           cd ..
           envsubst <android-${{matrix.arch}} >build-crossfile
-          export C_FLAGS="-fno-builtin-__tls_get_addr"
-          export CXXFLAGS="-fno-builtin-__tls_get_addr"
-          meson setup "build-android" \
+          LDFLAGS='-l:libandroid-shmem.a -llog' meson setup "build-android" \
             --prefix=/tmp/pan \
             -Dtools=panfrost \
             --cross-file "build-crossfile" \
@@ -57,7 +55,8 @@ jobs:
             -Dvulkan-drivers= \
             -Dgallium-drivers=swrast,panfrost \
             -Dshared-glapi=true \
-            -Dcpp_rtti=true
+            -Dc_args="-Wno-error=incompatible-function-pointer-types -fno-emulated-tls" \
+            -Dbuildtype=release
           ninja -C "build-android" install
       - name: Upload libraries
         uses: actions/upload-artifact@v2
