@@ -55,6 +55,9 @@ jobs:
             -Dvulkan-drivers= \
             -Dgallium-drivers=swrast,panfrost \
             -Dshared-glapi=true
+            -Dc_args="-fno-builtin-__tls_get_addr" \
+            -Dcpp_args="-fno-builtin-__tls_get_addr" \
+            -Dcpp_rtti=true
           ninja -C "build-android" install
       - name: Upload libraries
         uses: actions/upload-artifact@v2
