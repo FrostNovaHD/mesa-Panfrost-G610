@@ -42,6 +42,8 @@ jobs:
           ninja -C "build-android" install
           cd ..
           envsubst <android-${{matrix.arch}} >build-crossfile
+          export C_FLAGS="-fno-builtin-__tls_get_addr"
+          export CXXFLAGS="-fno-builtin-__tls_get_addr"
           meson setup "build-android" \
             --prefix=/tmp/pan \
             -Dtools=panfrost \
@@ -54,9 +56,7 @@ jobs:
             -Dosmesa=true \
             -Dvulkan-drivers= \
             -Dgallium-drivers=swrast,panfrost \
-            -Dshared-glapi=true
-            -Dc_args="-fno-builtin-__tls_get_addr" \
-            -Dcpp_args="-fno-builtin-__tls_get_addr" \
+            -Dshared-glapi=true \
             -Dcpp_rtti=true
           ninja -C "build-android" install
       - name: Upload libraries
