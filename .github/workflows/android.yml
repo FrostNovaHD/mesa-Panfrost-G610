@@ -8,7 +8,7 @@ jobs:
   build:
     strategy:
       matrix:
-        arch: [ "aarch64", "arm32" ]
+        arch: [ "arm32" ]
       fail-fast: false
 
     name: "Build for ${{matrix.arch}}"
@@ -47,7 +47,7 @@ jobs:
             -Dtools=panfrost \
             --cross-file "build-crossfile" \
             -Dplatforms=android \
-            -Dplatform-sdk-version=34 \
+            -Dplatform-sdk-version=33 \
             -Dllvm=disabled \
             -Dandroid-stub=true \
             -Dopengl=true \
@@ -55,9 +55,8 @@ jobs:
             -Dvulkan-drivers= \
             -Dgallium-drivers=swrast,panfrost \
             -Dshared-glapi=true \
-            -Dc_args="-Wno-error=incompatible-function-pointer-types -fno-emulated-tls -fno-use-cxa-atexit" \
+            -Dc_args="-Wno-error=incompatible-function-pointer-types" \
             -Dbuildtype=release
-            -Dcpp_link_args="-lc++_shared"
           ninja -C "build-android" install
       - name: Upload libraries
         uses: actions/upload-artifact@v2
