@@ -9,7 +9,7 @@
 
 #include "macros.h"
 
-#ifdef HAVE_PTHREAD && !defined(__APPLE__) && !defined(ANDROID) && !defined(MESA_DISABLE_TLS)
+#ifdef HAVE_PTHREAD
 #include <signal.h>
 #ifdef HAVE_PTHREAD_NP_H
 #include <pthread_np.h>
@@ -74,7 +74,7 @@ int u_thread_create(thrd_t *thrd, int (*routine)(void *), void *param)
 
 void u_thread_setname( const char *name )
 {
-#if defined(HAVE_PTHREAD) && !defined(MESA_DISABLE_TLS)
+#if defined(HAVE_PTHREAD)
 #if DETECT_OS_LINUX || DETECT_OS_CYGWIN || DETECT_OS_SOLARIS || defined(__GLIBC__)
    int ret = pthread_setname_np(pthread_self(), name);
    if (ret == ERANGE) {

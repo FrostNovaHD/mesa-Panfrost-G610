@@ -15,9 +15,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
-        
+    steps: 
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
 
       - name: Build
         run: |
@@ -25,7 +26,7 @@ jobs:
           sudo apt install -y meson libxrandr-dev libxxf86vm-dev libxcb-*-dev libx11-xcb-dev libxfixes-dev libdrm-dev libx11-dev
           pip3 install mako
           export ANDROID_NDK_HOME="$ANDROID_SDK_ROOT/ndk-bundle"
-          envsubst <android-drm-${{matrix.arch}} >build-crossfile-drm
+          envsubst <android-drm-${{matrix.arch}} > build-crossfile-drm
           git clone --depth 1 https://gitlab.freedesktop.org/mesa/drm.git
           cd drm
           meson setup "build-android" \
@@ -40,8 +41,9 @@ jobs:
             -Dvc4=disabled \
             -Detnaviv=disabled
           ninja -C "build-android" install
+
           cd ..
-          envsubst <android-${{matrix.arch}} >build-crossfile
+          envsubst <android-${{matrix.arch}} > build-crossfile
           meson setup "build-android" \
             --prefix=/tmp/pan \
             -Dtools=panfrost \
@@ -55,9 +57,6 @@ jobs:
             -Dvulkan-drivers= \
             -Dgallium-drivers=swrast,panfrost \
             -Dshared-glapi=false \
-            -Dcpp_args="-DMESA_DISABLE_TLS" \
-            -Dc_link_args="-DMESA_DISABLE_TLS" \
-            -Dcpp_link_args="-DMESA_DISABLE_TLS" \ 
             -Dc_args="-Wno-error=incompatible-function-pointer-types" \
             -Dbuildtype=release
           ninja -C "build-android" install
