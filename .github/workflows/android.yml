@@ -65,6 +65,9 @@ jobs:
             -Dgallium-drivers=swrast,panfrost \
             -Dshared-glapi=false \
             -Dc_args="-Wno-error=incompatible-function-pointer-types" \
+            -Dcpp_args="-D__ANDROID__ -DUSE_ELF_TLS" \
+            -Dc_link_args="-D__ANDROID__ -DUSE_ELF_TLS" \
+            -Dcpp_link_args="-D__ANDROID__ -DUSE_ELF_TLS" \
             -Dbuildtype=release
           ninja -C "build-android" install
 
