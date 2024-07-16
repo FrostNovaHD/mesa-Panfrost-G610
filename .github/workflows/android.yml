@@ -54,7 +54,10 @@ jobs:
             -Dosmesa=true \
             -Dvulkan-drivers= \
             -Dgallium-drivers=swrast,panfrost \
-            -Dshared-glapi=true \
+            -Dshared-glapi=false \
+            -Dcpp_args="-DMESA_DISABLE_TLS" \
+            -Dc_link_args="-DMESA_DISABLE_TLS" \
+            -Dcpp_link_args="-DMESA_DISABLE_TLS" \ 
             -Dc_args="-Wno-error=incompatible-function-pointer-types" \
             -Dbuildtype=release
           ninja -C "build-android" install
