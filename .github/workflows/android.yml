@@ -56,7 +56,7 @@ jobs:
             -Dtools=panfrost \
             --cross-file "build-crossfile" \
             -Dplatforms=android \
-            -Dplatform-sdk-version=33 \
+            -Dplatform-sdk-version=26 \
             -Dllvm=disabled \
             -Dandroid-stub=true \
             -Dopengl=true \
@@ -65,10 +65,12 @@ jobs:
             -Dgallium-drivers=swrast,panfrost \
             -Dshared-glapi=false \
             -Dc_args="-Wno-error=incompatible-function-pointer-types" \
-            -Dcpp_args="-D__ANDROID__ -DUSE_ELF_TLS" \
-            -Dc_link_args="-D__ANDROID__ -DUSE_ELF_TLS" \
-            -Dcpp_link_args="-D__ANDROID__ -DUSE_ELF_TLS" \
-            -Dbuildtype=release
+            -Dbuildtype=release \
+            -Dandroid-libbacktrace=disabled \
+            -Dxlib-lease=disabled \
+            -Degl=disabled \
+            -Dgbm=disabled \
+            -Dglx=disabled
           ninja -C "build-android" install
 
       - name: Upload Panfrost
