@@ -21,8 +21,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y meson libxrandr-dev libxxf86vm-dev libxcb-*-dev libx11-xcb-dev libxfixes-dev libdrm-dev libx11-dev
-          pip3 install mako
+          sudo apt install -y libxrandr-dev libxxf86vm-dev libxcb-*-dev libx11-xcb-dev libxfixes-dev libdrm-dev libx11-dev
+          pip3 install mako meson ninja
 
           echo 'export ANDROID_NDK_HOME="$ANDROID_SDK_ROOT/ndk-bundle"' >> $GITHUB_ENV
 
@@ -63,7 +63,7 @@ jobs:
             -Dosmesa=true \
             -Dvulkan-drivers= \
             -Dgallium-drivers=swrast,panfrost \
-            -Dshared-glapi=false \
+            -Dshared-glapi=true \
             -Dc_args="-Wno-error=incompatible-function-pointer-types" \
             -Dbuildtype=release \
             -Dxlib-lease=disabled \
